@@ -30,7 +30,7 @@ from helpers.errors import DurationLimitError
 
 chat_id = None
 @Client.on_message(
-    filters.command("oynat")
+    filters.command("hdhdmdsj")
     & filters.group
     & ~ filters.edited
 )
