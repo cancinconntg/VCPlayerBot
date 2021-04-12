@@ -27,12 +27,17 @@ async def start_(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton(
-                        "👥 Group", url="https://t.me/TeLeTiPsOfficialOnTopicChat"
+                        "👥 Profilim", url="https://t.me/SaygisizlarSahip"
                     )
                 ],
                 [
                     InlineKeyboardButton(
-                        "Join Channel", url="https://t.me/TeLeTiPsOfficialchannel"
+                        "👥 Grubum", url="https://t.me/Saygisizlar"
+                    )
+                ],
+                [
+                    InlineKeyboardButton(
+                        "👥 Kanalım", url="https://t.me/WixstraGod"
                     )
                 ]
             ]
@@ -46,15 +51,15 @@ async def start_(client: Client, message: Message):
 )
 async def start(client: Client, message: Message):
     await message.reply_text(
-        "💁🏻‍♂️ Do you want to search for a YouTube video?",
+        "💁🏻‍♂️ YouTube videosu aramak istiyor musunuz?",
         reply_markup=InlineKeyboardMarkup(
             [
                 [
                     InlineKeyboardButton(
-                        "✅ Yes", switch_inline_query_current_chat=""
+                        "✅ Evet", switch_inline_query_current_chat=""
                     ),
                     InlineKeyboardButton(
-                        "No ❌", callback_data="close"
+                        "Hayır ❌", callback_data="close"
                     )
                 ]
             ]
