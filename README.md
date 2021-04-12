@@ -19,14 +19,20 @@ Get STRING_NAME from here:
 
 ## Komutlar
 
-⚜️ /oynat - Yanıtlanan ses dosyasını veya YouTube videosunu bağlantı üzerinden çalar. \n
+⚜️ /oynat - Yanıtlanan ses dosyasını veya YouTube videosunu bağlantı üzerinden çalar. 
 
-⚜️ /durdur - Sesli Sohbet Müziğini Duraklat. \n
+⚜️ /durdur - Sesli Sohbet Müziğini Duraklat. 
 
-⚜️ /devam - Sesli Sohbet Müziğine Devam Et. \n
-⚜️ /atla - Sesli Sohbette Çalan Geçerli Müziği Atlar. \n
-⚜️ /bitir - Sırayı temizler ve Sesli Sohbet Müziği'ni sona erdirir. \n
-⚜️ /yenile - Botu yeniler. Admin listesi yenilenir. \n
-⚜️ /bul - Müziği youtube den bulur gruba gönderir. Örnek /bul Emir Can İğrek nalan.  \n
-⚜️ /deezer - Müziği deezer den bulur gruba gönderir. Örnek /deezer Emir Can İğrek nalan.  \n
-⚜️ /saavn - Müziği bulur. Fakat yabancı şarkılar. \n
+⚜️ /devam - Sesli Sohbet Müziğine Devam Et. 
+
+⚜️ /atla - Sesli Sohbette Çalan Geçerli Müziği Atlar. 
+
+⚜️ /bitir - Sırayı temizler ve Sesli Sohbet Müziği'ni sona erdirir. 
+
+⚜️ /yenile - Botu yeniler. Admin listesi yenilenir. 
+
+⚜️ /bul - Müziği youtube den bulur gruba gönderir. Örnek /bul Emir Can İğrek nalan.  
+
+⚜️ /deezer - Müziği deezer den bulur gruba gönderir. Örnek /deezer Emir Can İğrek nalan.  
+
+⚜️ /saavn - Müziği bulur. Fakat yabancı şarkılar. 
