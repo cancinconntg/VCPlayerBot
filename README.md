@@ -20,7 +20,9 @@ Get STRING_NAME from here:
 ## Komutlar
 
 ⚜️ /oynat - Yanıtlanan ses dosyasını veya YouTube videosunu bağlantı üzerinden çalar. \n
+
 ⚜️ /durdur - Sesli Sohbet Müziğini Duraklat. \n
+
 ⚜️ /devam - Sesli Sohbet Müziğine Devam Et. \n
 ⚜️ /atla - Sesli Sohbette Çalan Geçerli Müziği Atlar. \n
 ⚜️ /bitir - Sırayı temizler ve Sesli Sohbet Müziği'ni sona erdirir. \n
