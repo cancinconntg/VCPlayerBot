@@ -36,58 +36,30 @@ chat_id = None
 )
 @errors
 async def play(client: Client, message_: Message):
-    audio = (message_.reply_to_message.audio or message_.reply_to_message.voice) if message_.reply_to_message else None
-    chat_id=message_.chat.id
-    res = await message_.reply_text("✯𝗕𝗼𝘁✯=🔄 İşleniyor...")
+    audio = (message.reply_to_message.audio or message.reply_to_message.voice) if message.reply_to_message else None
+    url = get_url(message)
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
-                f"Ses {DURATION_LIMIT} dk dan uzun. Seçtiğiniz şarkı {audio.duration / 60} dk."
+                f"**{bn} :-** 😕 Ses Dosyası Uzun {DURATION_LIMIT} minute(s) izin verilmez!\n🤐 Sağlanan ses, {audio.duration / 60} minute(s)"
             )
 
-        file_name = audio.file_id + audio.file_name.split(".")[-1]
-        file_path = await convert(await message_.reply_to_message.download(file_name))
+        file_name = get_file_name(audio)
+        file_path = await converter.convert(
+            (await message.reply_to_message.download(file_name))
+            if not path.isfile(path.join("downloads", file_name)) else file_name
+        )
+    elif url:
+        file_path = await converter.convert(youtube.download(url))
     else:
-        messages = [message_]
-        text = ""
-        offset = None
-        length = None
+        return await message.reply_text(f"**{bn} :-** 🙄 Bana oynatacak bir şey vermedin.!")
 
-        if message_.reply_to_message:
-            messages.append(message_.reply_to_message)
-
-        for message in messages:
-            if offset:
-                break
-
-            if message.entities:
-                for entity in message.entities:
-                    if entity.type == "url":
-                        text = message.text or message.caption
-                        offset, length = entity.offset, entity.length
-                        break
-
-        if offset == None:
-            await res.edit_text("❕ Bana oynatacak birşey vermedin.")
-            return
-
-        url = text[offset:offset+length]
-
-        file_path =await convert(download(url))
-
-    if message_.chat.id in tgcalls.pytgcalls.active_calls:
-        position = sira.add(message_.chat.id, file_path)
-        await res.edit_text(f"✯𝗕𝗼𝘁✯=#️⃣ Sıraya Alındı. Sırası = {position}.")
+    if message.chat.id in callsmusic.pytgcalls.active_calls:
+        await message.reply_text(f"**{bn} :-** 😉 Sıraya Alındı. Sırası= #{await callsmusic.queues.put(message.chat.id, file_path=file_path)} !")
     else:
-        await res.edit_text("✯𝗕𝗼𝘁✯=▶️ Oynatılıyor...")
-        res.delete
-        m = await client.send_photo(
-        chat_id=message_.chat.id,
-        photo="https://telegra.ph/file/bfd3e51f44415da8875f3.jpg",
-        caption=f"Şarkınızı çalınıyor. [✯𝗕𝗼𝘁✯](https://t.me/Saygisizlar).",
-         ) 
-        tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path)
+        callsmusic.pytgcalls.join_group_call(message.chat.id, file_path)
+        await message.reply_text(f"**{bn} :-** 🥳 Oynatılıyor...")
 
 
 #---------------------------------DEEZER------------------------------------------------------------------
