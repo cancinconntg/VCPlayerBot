@@ -30,7 +30,7 @@ from helpers.errors import DurationLimitError
 
 chat_id = None
 @Client.on_message(
-    filters.command("play")
+    filters.command("oynat")
     & filters.group
     & ~ filters.edited
 )
@@ -38,12 +38,12 @@ chat_id = None
 async def play(client: Client, message_: Message):
     audio = (message_.reply_to_message.audio or message_.reply_to_message.voice) if message_.reply_to_message else None
     chat_id=message_.chat.id
-    res = await message_.reply_text("✯𝗩𝗖𝗣𝗹𝗮𝘆✯=🔄 Processing...")
+    res = await message_.reply_text("✯𝗕𝗼𝘁✯=🔄 İşleniyor...")
 
     if audio:
         if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
-                f"Videos longer than {DURATION_LIMIT} minute(s) aren't allowed, the provided video is {audio.duration / 60} minute(s)"
+                f"Ses {DURATION_LIMIT} dk dan uzun. Seçtiğiniz şarkı {audio.duration / 60} dk."
             )
 
         file_name = audio.file_id + audio.file_name.split(".")[-1]
@@ -69,7 +69,7 @@ async def play(client: Client, message_: Message):
                         break
 
         if offset == None:
-            await res.edit_text("❕ You did not give me anything to play.")
+            await res.edit_text("❕ Bana oynatacak birşey vermedin.")
             return
 
         url = text[offset:offset+length]
@@ -78,14 +78,14 @@ async def play(client: Client, message_: Message):
 
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         position = sira.add(message_.chat.id, file_path)
-        await res.edit_text(f"✯𝗩𝗖𝗣𝗹𝗮𝘆✯=#️⃣ Queued at position {position}.")
+        await res.edit_text(f"✯𝗕𝗼𝘁✯=#️⃣ Sıraya Alındı. Sırası = {position}.")
     else:
-        await res.edit_text("✯𝗩𝗖𝗣𝗹𝗮𝘆✯=▶️ Playing...")
+        await res.edit_text("✯𝗕𝗼𝘁✯=▶️ Oynatılıyor...")
         res.delete
         m = await client.send_photo(
         chat_id=message_.chat.id,
         photo="https://telegra.ph/file/bfd3e51f44415da8875f3.jpg",
-        caption=f"Playing Your song Via  [✯𝗩𝗖𝗣𝗹𝗮𝘆✯](https://t.me/TeLeTiPsOfficialOnTopicChat).",
+        caption=f"Şarkınızı çalınıyor. [✯𝗕𝗼𝘁✯](https://t.me/Saygisizlar).",
          ) 
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path)
 
@@ -111,7 +111,7 @@ async def deezer(client: Client, message_: Message):
         url = r[0]["url"]
     except:
         await res.edit(
-            "Found Literally Nothing, You Should Work On Your English!"
+            "Kelimenin tam anlamıyla hiçbir şey bulamadım, İngilizceniz üzerinde çalışmalısınız!"
         )
         is_playing = False
         return
@@ -121,15 +121,15 @@ async def deezer(client: Client, message_: Message):
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         await res.edit("adding in queue")
         position = sira.add(message_.chat.id, file_path)
-        await res.edit_text(f"✯𝗩𝗖𝗣𝗹𝗮𝘆✯=#️⃣ Queued at position {position}.")
+        await res.edit_text(f"✯𝗕𝗼𝘁✯=#️⃣ Sıraya alındı. Sırası = {position}.")
     else:
-        await res.edit_text("✯𝗩𝗖𝗣𝗹𝗮𝘆✯=▶️ Playing.....")
+        await res.edit_text("✯𝗕𝗼𝘁✯=▶️ Oynatılıyor.....")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path)
     await res.delete()
     m = await client.send_photo(
         chat_id=message_.chat.id,
         photo="final.png",
-        caption=f"Playing [{title}]({url}) Via [Deezer](https://t.me/TeLeTiPsOfficialOnTopicChat)."
+        caption=f"Oynatılıyor [{title}]({url}) Via [Deezer](https://t.me/Saygisizlar)."
     ) 
     os.remove("final.png")
 # -----------------------------------------------------Jiosaavn-----------------------------------------------------------------
@@ -165,16 +165,16 @@ async def jiosaavn(client: Client, message_: Message):
     file_path= await convert(wget.download(slink))
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         position = sira.add(message_.chat.id, file_path)
-        await res.edit_text(f"✯𝗩𝗖𝗣𝗹𝗮𝘆✯=#️⃣ Queued at position {position}.")
+        await res.edit_text(f"✯𝗕𝗼𝘁✯=#️⃣ Queued at position {position}.")
     else:
-        await res.edit_text("✯𝗩𝗖𝗣𝗹𝗮𝘆✯=▶️ Playing.....")
+        await res.edit_text("✯𝗕𝗼𝘁✯=▶️ Playing.....")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path)
     await res.edit("Generating Thumbnail.")
     await generate_cover_square(requested_by, sname, ssingers, sduration, sthumb)
     await res.delete()
     m = await client.send_photo(
         chat_id=message_.chat.id,
-        caption=f"Playing {sname} Via [Jiosaavn](https://t.me/TeLeTiPsOfficialOnTopicChat)",
+        caption=f"Playing {sname} Via [Jiosaavn](https://t.me/Saygisizlar)",
         photo="final.png",
     )
     os.remove("final.png")
@@ -190,7 +190,7 @@ def changeImageSize(maxWidth, maxHeight, image):
  
  #-----------------------------------YOUTUBE--------------------------------------------------------------
 @Client.on_message(
-    filters.command("song")
+    filters.command("bul")
     & filters.group
     & ~ filters.edited
 )
@@ -199,7 +199,7 @@ async def ytp(client: Client, message_: Message):
     chat_id=message_.chat.id
     text = message_.text.split(" ", 1)
     query = text[1]
-    res = await message_.reply_text(f"Searching for `{query}` on You Tube")
+    res = await message_.reply_text(f"Aranıyor `{query}`  You Tube")
     try:
         results = YoutubeSearch(query, max_results=1).to_dict()
         link = f"https://youtube.com{results[0]['url_suffix']}"
@@ -209,7 +209,7 @@ async def ytp(client: Client, message_: Message):
         views = results[0]["views"]
     except Exception as e:
         await res.edit(
-            "Found Literally Nothing!, You Should Work On Your English."
+            "Kelimenin tam anlamıyla hiçbir şey bulamadım!"
         )
         is_playing = False
         print(str(e))
@@ -217,16 +217,16 @@ async def ytp(client: Client, message_: Message):
     file_path = await convert(download(link))
     if message_.chat.id in tgcalls.pytgcalls.active_calls:
         position = sira.add(message_.chat.id, file_path)
-        await res.edit_text(f"✯𝗩𝗖𝗣𝗹𝗮𝘆✯=#️⃣ Queued at position {position}.")
+        await res.edit_text(f"✯𝗕𝗼𝘁✯=#️⃣ Sıraya alındı. Sırası = {position}.")
     else:
-        await res.edit_text("✯𝗩𝗖𝗣𝗹𝗮𝘆✯=▶️ Playing....")
+        await res.edit_text("✯𝗕𝗼𝘁✯=▶️ Oynatılıyor....")
         tgcalls.pytgcalls.join_group_call(message_.chat.id, file_path)
     await res.edit("Generating Thumbnail.")
     await generate_cover(requested_by, title, views, duration, thumbnail)
     res.delete
     m = await client.send_photo(
         chat_id=message_.chat.id,
-        caption=f"Playing `{query}` Via [YouTube](https://t.me/TeLeTiPsOfficialOnTopicChat)",
+        caption=f"Playing `{query}` Via [YouTube](https://t.me/Saygisizlar)",
         photo="final.png",
         reply_markup=InlineKeyboardMarkup(
             [[InlineKeyboardButton("Watch on youtube", url=link)]]
