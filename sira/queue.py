@@ -1,5 +1,5 @@
 """
-To prevent conflict with built-in modules, using "sira", the Greek word for "queue".
+Yerleşik modüllerle çakışmayı önlemek için, Yunanca "sıra" sözcüüğü olan "sıra"yı kullanarak.
 """
 from queue import Queue, Empty
 from typing import Dict, Union
